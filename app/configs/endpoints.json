@@ -1,0 +1,7 @@
+{
+    "login": "users/login",
+    "contacts": {
+        "list":"contacts/view-contacts",
+        "create": "contacts/create-contact"
+    }
+}

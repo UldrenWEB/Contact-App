@@ -1,27 +1,36 @@
 {
   "expo": {
-    "name": "contact-app2",
-    "slug": "contact-app2",
+    "name": "contact-app",
+    "slug": "contact-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/splash.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.uldrendev.contactapp"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-asset"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2c21188e-b232-494c-9511-d57e1060db76"
+      }
     }
   }
 }

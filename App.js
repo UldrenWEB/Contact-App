@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import LoginScreen from "./app/screens/LoginScreen.js";
+import SplashScreen from "./app/screens/SplashScreen.js";
+import ContactScreen from "./app/screens/ContactScreen.js";
+import RegisterScreen from "./app/screens/RegisterScreen.js";
+import DetailContactScreen from "./app/screens/DetailContactScreen.js";
+import EditScreen from "./app/screens/EditScreen.js";
+import EditProfile from "./app/screens/EditProfile.js";
+import AddContactScreen from "./app/screens/AddContactScreen.js";
+import GroupScreen from "./app/screens/GroupsScreen.js";
+import GroupDetail from "./app/screens/GroupDetail.js";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import { MyNavigation } from "./app/routes/MyNavigation.js";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  const nivel = [
+    { name: "Splash", compo: SplashScreen },
+    { name: "Login", compo: LoginScreen },
+    { name: "Register", compo: RegisterScreen },
+    { name: "DetailContact", compo: DetailContactScreen },
+    { name: "Edit", compo: EditScreen },
+    { name: "Prueba", compo: ContactScreen },
+    { name: "EditProfile", compo: EditProfile },
+    { name: "AddContact", compo: AddContactScreen },
+    { name: "Groups", compo: GroupScreen },
+    { name: "GroupDetail", compo: GroupDetail },
+  ];
+
+  return <MyNavigation arrayComponents={nivel} />;
+};
+
+export default App;
