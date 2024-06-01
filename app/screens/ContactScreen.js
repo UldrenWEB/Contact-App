@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Session from "../storage/sessionStorage";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,12 +16,10 @@ import HeaderContact from "../components/HeaderContact";
 import Colors from "../styles/Colors";
 import { Icon } from "react-native-elements";
 import Footer from "../components/Footer";
-import {
-  contacts as endPoint,
-  user as getUser,
-} from "../configs/endpoints.json";
+import { contacts as endPoint } from "../configs/endpoints.json";
 import { wrapper } from "../service/fetchWrapper";
 import { converterHex } from "../service/converterHex";
+import userContext from "../customs/userContext.js";
 
 const unknow = require("../resources/FotoPerfil.png");
 
@@ -32,7 +29,7 @@ const ContactScreen = ({ navigation }) => {
   const [groupedContacts, setGroupedContacts] = useState({});
   const scrollY = new Animated.Value(0);
   const [arrayContact, setArrayContacts] = useState("");
-  const [user, setUser] = useState(null);
+  const { user, updateUser } = useContext(userContext);
 
   useValidateSession(navigation);
 
@@ -64,26 +61,16 @@ const ContactScreen = ({ navigation }) => {
         endPoint: endPoint.list,
         isToken: true,
       });
-      console.log("Se ejecuto el primero", result);
-      const idUser = await (await Session.getSession()).id;
-      console.log("El id es:", idUser);
 
-      const user = await wrapper({
-        method: "get",
-        endPoint: `${getUser.get}${idUser}`,
-        isToken: true,
-      });
-      if (!result || !user || !user?.username) return setIsLoading(false);
+      if (!result) return setIsLoading(false);
 
       setIsLoading(false);
-      setUser(user);
       setArrayContacts(result);
     };
     contacts();
   }, []);
 
   useEffect(() => {
-    // Ordena los contactos alfabéticamente
     if (!arrayContact.length)
       return console.log("No se ejecuto por no tener contactos");
 
@@ -93,7 +80,6 @@ const ContactScreen = ({ navigation }) => {
       )
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    // Agrupa los contactos por la primera letra de su nombre
     const groups = sortedContacts.reduce((groups, contact) => {
       const firstLetter = contact.name[0].toUpperCase();
       if (!groups[firstLetter]) {

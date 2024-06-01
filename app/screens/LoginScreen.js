@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   View,
@@ -14,8 +14,10 @@ import MyButton from "../components/MyButton";
 import Session from "../storage/sessionStorage";
 import TypingText from "../components/typingText";
 import Colors from "../styles/Colors";
+import { user as getUser } from "../configs/endpoints.json";
 
 import { wrapper } from "../service/fetchWrapper";
+import userContext from "../customs/userContext";
 
 const logo = require("../resources/spiralLogo.png");
 
@@ -23,6 +25,7 @@ const LoginScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [isError, setIsError] = useState({ bool: false, msg: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const { user, updateUser } = useContext(userContext);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -69,6 +72,18 @@ const LoginScreen = ({ navigation }) => {
         return;
       }
       await Session.saveSession(result.token);
+
+      const idUser = await (await Session.getSession()).id;
+
+      const myUser = await wrapper({
+        method: "get",
+        endPoint: `${getUser.get}${idUser}`,
+        isToken: true,
+      });
+
+      if (!myUser || !myUser.username) return setIsLoading(false);
+
+      updateUser(myUser);
       setEmail("");
       setPassword("");
       setIsLoading(false);
