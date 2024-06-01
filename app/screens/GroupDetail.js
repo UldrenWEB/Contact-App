@@ -68,7 +68,11 @@ const GroupDetail = ({ navigation, route }) => {
                 onChangeText={(text) => setTextSearcherContact(text)}
               />
             </View>
-            <CheckBoxComponent text={textSearcherContact} ref={contactRef} />
+            <CheckBoxComponent
+              currentContacts={group?.contacts}
+              text={textSearcherContact}
+              ref={contactRef}
+            />
             <View style={style.contBtn}>
               <View style={style.btnModal}>
                 <Button

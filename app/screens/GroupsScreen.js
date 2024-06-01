@@ -175,7 +175,6 @@ const GroupScreen = ({ navigation }) => {
                 key={group._id}
                 group={group}
                 onPress={handlerNavigation}
-                navigation={navigation}
               />
             );
           })}

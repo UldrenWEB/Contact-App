@@ -1,5 +1,11 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { CheckBox } from "react-native-elements";
 import Colors from "../styles/Colors";
 
@@ -378,13 +384,19 @@ const array = [
   },
 ];
 
-const CheckBoxComponent = forwardRef(({ text }, ref) => {
+const CheckBoxComponent = forwardRef(({ text = false }, ref) => {
   const [contacts, setContacts] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [filterContact, setFilterContacts] = useState([]);
 
   useEffect(() => {
-    console.log("Se cargaron los contactos");
+    setIsLoading(true);
+    setTimeout(() => {
+      console.log("Se cargaron los contactos");
+    }, 10000);
+    setIsLoading(false);
+
     setContacts(array);
   }, []);
 
@@ -406,11 +418,29 @@ const CheckBoxComponent = forwardRef(({ text }, ref) => {
 
   const handleDeselect = (contactId) => {
     setSelectedOptions((prevOptions) =>
-      prevOptions.filter((option) => option.id !== contactId)
+      prevOptions.filter((option) => option._id !== contactId)
     );
   };
 
   useImperativeHandle(ref, () => selectedOptions);
+
+  if (isLoading) {
+    return (
+      <>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: Colors.BLACK,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </>
+    );
+  }
 
   return (
     <ScrollView style={style.container}>
