@@ -12,31 +12,42 @@ const Contact = ({ contact, onPress }) => {
         <Text style={contactStyle.txtContact}>{contact.name}</Text>
 
         <View style={contactStyle.containerIcons}>
-          <View>
-            <IconApp
-              iconType={"comment"}
-              colorName={"blue"}
-              arrayData={["+584121528916", "+57413678909"]}
-            />
-          </View>
-          <View>
-            <IconApp
-              iconType={"phone"}
-              colorName={"pink"}
-              arrayData={["+584121528916"]}
-            />
-          </View>
-          <View>
-            <IconApp
-              iconType={"envelope"}
-              colorName={"blue"}
-              arrayData={["uldrenmiguel33@gmail.com"]}
-            />
-          </View>
+          {contact?.phoneNumbers.length > 0 && (
+            <View>
+              <IconApp
+                iconType={"phone"}
+                colorName={"pink"}
+                arrayData={contact.phoneNumbers}
+              />
+            </View>
+          )}
+          {contact?.email && (
+            <View>
+              <IconApp
+                iconType={"envelope"}
+                colorName={"blue"}
+                arrayData={[contact.email]}
+              />
+            </View>
+          )}
+          {contact?.phoneNumbers.length > 0 && (
+            <View>
+              <IconApp
+                iconType={"comment"}
+                colorName={"pink"}
+                arrayData={contact.phoneNumbers}
+              />
+            </View>
+          )}
         </View>
       </TouchableOpacity>
     </>
   );
 };
 
+<IconApp
+  iconType={"envelope"}
+  colorName={"blue"}
+  arrayData={["uldrenmiguel33@gmail.com"]}
+/>;
 export default Contact;

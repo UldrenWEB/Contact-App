@@ -6,63 +6,58 @@ import {
   TouchableOpacity,
   StatusBar,
   Image,
+  Alert,
 } from "react-native";
 import { converterHex } from "../service/converterHex";
 import Colors from "../styles/Colors";
 import IconApp from "../components/IconApp";
 import { Icon } from "react-native-elements";
 import FieldContact from "../components/fieldContact";
+import { wrapper } from "../service/fetchWrapper";
+import { contacts as endPoint } from "../configs/endpoints.json";
 
 const unknowImage = require("../resources/image.png");
 
-const contact = {
-  _id: "1",
-  name: "Marcial",
-  lastName: "Hernandez",
-  phoneNumber: [
-    { home: "0426891239" },
-    { work: "04120668975" },
-    { personal: "0414789325" },
-  ],
-  email: "marcial@example.com",
-  userId: "3",
-};
+// const contact = {
+//   _id: "1",
+//   name: "Marcial",
+//   lastName: "Hernandez",
+//   phoneNumber: [
+//     { home: "0426891239" },
+//     { work: "04120668975" },
+//     { personal: "0414789325" },
+//   ],
+//   email: "marcial@example.com",
+//   userId: "3",
+// };
 
 const DetailContactScreen = ({ route, navigation }) => {
-  // const { id } = route.params;
+  const { id } = route.params;
   const [contactData, setContactData] = useState([]);
+  const [contact, setContact] = useState({});
 
-  /*
-    useEffect(() => {
+  useEffect(() => {
     const chargeContact = async () => {
-      //Aqui se hara el fetch cuando cargue el componente o cambie el ID
-      const obj = result.data;
+      const contact = await wrapper({
+        method: "get",
+        endPoint: `${endPoint.get}/${id}`,
+        isToken: true,
+      });
+      console.log(id);
 
-      return obj;
+      if (!contact || !contact.name)
+        return Alert.alert("Error", "Hubo un error al hacer la consulta");
+
+      setContact(contact);
     };
 
     chargeContact();
   }, [id]);
-  */
 
   const editHandlerPress = () => {
     // if (!contact._id) return;
     //?Aqui se pasaran los datos del contact
-    navigation.navigate("Edit", {
-      contact: {
-        _id: "1",
-        name: "Marcial",
-        lastName: "Hernandez",
-        phoneNumber: [
-          { home: "0426891239" },
-          { work: "04120668975" },
-          { personal: "0414789325" },
-        ],
-        address: "Calle 3",
-        email: "marcial@example.com",
-        userId: "3",
-      },
-    });
+    navigation.navigate("Edit", { contact });
   };
 
   useEffect(() => {
@@ -168,7 +163,7 @@ const DetailContactScreen = ({ route, navigation }) => {
             <View style={style.contIcon}>
               {contactData
                 .filter((item) => item.type === "icon")
-                .map((item, index) => (
+                .map((item) => (
                   <>{item.compo}</>
                 ))}
             </View>
@@ -248,6 +243,8 @@ const style = StyleSheet.create({
     fontFamily: "poBold",
   },
   contIcon: {
+    borderColor: "green",
+    borderWidth: 1,
     flex: 1,
     flexDirection: "row",
     alignItems: "center",

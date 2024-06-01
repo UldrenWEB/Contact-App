@@ -21,7 +21,7 @@ const contactStyle = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    width: "50%",
+    width: "45%",
     alignItems: "center",
   },
   txtContact: {

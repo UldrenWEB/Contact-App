@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import { contacts as endPoint } from "../configs/endpoints.json";
 import { wrapper } from "../service/fetchWrapper";
 import { converterHex } from "../service/converterHex";
 import userContext from "../customs/userContext.js";
+import { useFocusEffect } from "@react-navigation/native";
 
 const unknow = require("../resources/FotoPerfil.png");
 
@@ -38,7 +39,7 @@ const ContactScreen = ({ navigation }) => {
   };
 
   const onPressToAddHandler = () => {
-    navigation.navigate("AddContact");
+    navigation.navigate("AddContact", { currentContacts: arrayContact });
   };
 
   const onPressToProfileHandler = () => {
@@ -53,22 +54,27 @@ const ContactScreen = ({ navigation }) => {
     navigation.navigate("DetailContact", { id: contact._id });
   };
 
-  useEffect(() => {
-    const contacts = async () => {
-      setIsLoading(true);
-      const result = await wrapper({
-        method: "get",
-        endPoint: endPoint.list,
-        isToken: true,
-      });
+  useFocusEffect(
+    useCallback(() => {
+      const contacts = async () => {
+        setIsLoading(true);
+        console.log("se ejecuto");
+        const result = await wrapper({
+          method: "get",
+          endPoint: endPoint.list,
+          isToken: true,
+        });
 
-      if (!result) return setIsLoading(false);
+        console.log("Contactos", result);
 
-      setIsLoading(false);
-      setArrayContacts(result);
-    };
-    contacts();
-  }, []);
+        if (!result) return setIsLoading(false);
+
+        setIsLoading(false);
+        setArrayContacts(result);
+      };
+      contacts();
+    }, [])
+  );
 
   useEffect(() => {
     if (!arrayContact.length)

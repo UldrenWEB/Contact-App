@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  View,
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Colors from "../styles/Colors";
@@ -17,7 +15,7 @@ import { wrapper } from "../service/fetchWrapper";
 
 import { contacts } from "../configs/endpoints.json";
 
-const AddContactScreen = ({ navigation }) => {
+const AddContactScreen = ({ navigation, route }) => {
   const [editedEmail, setEditedEmail] = useState("");
   const [editedAddress, setEditedAddress] = useState("");
   const [editedName, setEditedName] = useState("");
@@ -27,9 +25,10 @@ const AddContactScreen = ({ navigation }) => {
     work: "",
     home: "",
   });
-
   const [openComponent, setOpenComponent] = useState(null);
   const [openSubComponent, setOpenSubComponent] = useState(null);
+
+  const { currentContacts } = route.params;
 
   const handleOpen = (componentName) => {
     setOpenComponent((prevComponent) =>
@@ -41,6 +40,15 @@ const AddContactScreen = ({ navigation }) => {
     setOpenSubComponent((prevComponent) =>
       prevComponent === componentName ? null : componentName
     );
+  };
+
+  const validateUniqueName = (name) => {
+    for (let contact of currentContacts) {
+      if (contact.name.toLowerCase() === name.toLowerCase()) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const validateEmail = (email) => {
@@ -78,6 +86,24 @@ const AddContactScreen = ({ navigation }) => {
       );
     }
 
+    if (!validateUniqueName(editedName)) {
+      Alert.alert("Error", "El nombre ingresado ya existe en tus contactos");
+      return;
+    }
+
+    if (
+      !editedEmail &&
+      !editedPhones.personal &&
+      !editedPhones.work &&
+      !editedPhones.home
+    ) {
+      Alert.alert(
+        "Error",
+        "Debe llenar al menos un campo de correo electrónico o número de teléfono"
+      );
+      return;
+    }
+
     if (!validateEmail(editedEmail)) {
       Alert.alert("Error", "Debe introducir un correo valido");
       return;
@@ -96,16 +122,17 @@ const AddContactScreen = ({ navigation }) => {
     }
 
     const obj = {
-      userId: (await Session.getSession())?.id,
       name: editedName,
-      lastName: "Prueba",
       email: editedEmail,
       address: editedAddress,
-      phoneNumbers: [
-        { type: "personal", number: editedPhones.personal },
-        { type: "work", number: editedPhones.work },
-        { type: "home", number: editedPhones.home },
-      ],
+      phoneNumbers:
+        editedPhones.work && editedPhones.home && editedPhones.personal
+          ? []
+          : [
+              { type: "personal", number: editedPhones.personal },
+              { type: "work", number: editedPhones.work },
+              { type: "home", number: editedPhones.home },
+            ],
     };
 
     try {
@@ -129,10 +156,6 @@ const AddContactScreen = ({ navigation }) => {
       Alert.alert("Error", "Hubo un error al hacer la consulta");
       return false;
     }
-
-    // const
-    //Aqui se debe agregar
-    console.log(obj);
   };
 
   const onChangeHandler = (setter) => (text) => {
