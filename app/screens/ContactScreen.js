@@ -17,383 +17,12 @@ import HeaderContact from "../components/HeaderContact";
 import Colors from "../styles/Colors";
 import { Icon } from "react-native-elements";
 import Footer from "../components/Footer";
-import { contacts as endPoint } from "../configs/endpoints.json";
+import {
+  contacts as endPoint,
+  user as getUser,
+} from "../configs/endpoints.json";
 import { wrapper } from "../service/fetchWrapper";
-
-const array = [
-  {
-    _id: "1",
-    name: "Marcial",
-    lastName: "Hernandez",
-    phoneNumber: [
-      { home: "0426891239" },
-      { work: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "marcial@example.com",
-    userId: "3",
-  },
-  {
-    _id: "2",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "3",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "4",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "5",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "6",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "7",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "8",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "9",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "10",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "11",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "12",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "13",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "14",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "15",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "16",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "17",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "18",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "18",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "20",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "21",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "22",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "23",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "24",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "25",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "26",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "27",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "28",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "29",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "30",
-    name: "Roberto",
-    lastName: "Pedrerol",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "roberto.arevalo@example.com",
-    userId: "2",
-  },
-  {
-    _id: "31",
-    name: "Uldren",
-    lastName: "Gedde",
-    phones: [
-      { home: "0426891239" },
-      { job: "04120668975" },
-      { personal: "0414789325" },
-    ],
-    email: "uldren@uldren.com",
-    userId: "1",
-  },
-];
+import { converterHex } from "../service/converterHex";
 
 const unknow = require("../resources/FotoPerfil.png");
 
@@ -403,7 +32,7 @@ const ContactScreen = ({ navigation }) => {
   const [groupedContacts, setGroupedContacts] = useState({});
   const scrollY = new Animated.Value(0);
   const [arrayContact, setArrayContacts] = useState("");
-  // const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
 
   useValidateSession(navigation);
 
@@ -420,7 +49,7 @@ const ContactScreen = ({ navigation }) => {
   };
 
   const onPressRedirectProfileHandler = () => {
-    navigation.navigate("EditProfile", { user: {} });
+    navigation.navigate("EditProfile", { user });
   };
 
   const onPressHandler = (contact) => {
@@ -429,30 +58,37 @@ const ContactScreen = ({ navigation }) => {
 
   useEffect(() => {
     const contacts = async () => {
+      setIsLoading(true);
       const result = await wrapper({
         method: "get",
         endPoint: endPoint.list,
         isToken: true,
       });
+      console.log("Se ejecuto el primero", result);
+      const idUser = await (await Session.getSession()).id;
+      console.log("El id es:", idUser);
 
-      console.log("Result antes", result);
-      if (!result) return null;
+      const user = await wrapper({
+        method: "get",
+        endPoint: `${getUser.get}${idUser}`,
+        isToken: true,
+      });
+      if (!result || !user || !user?.username) return setIsLoading(false);
 
-      console.log(result);
+      setIsLoading(false);
+      setUser(user);
       setArrayContacts(result);
     };
-
     contacts();
   }, []);
 
-  // useEffect(() => {
-  //   //Aqui se hara la solicitud de la sesion del usuario para tener sus datos
-  // }, [])
-
   useEffect(() => {
     // Ordena los contactos alfabéticamente
-    const sortedContacts = array
-      .filter((contact) =>
+    if (!arrayContact.length)
+      return console.log("No se ejecuto por no tener contactos");
+
+    const sortedContacts = arrayContact
+      ?.filter((contact) =>
         contact.name.toLowerCase().startsWith(txtSearcher.toLowerCase())
       )
       .sort((a, b) => a.name.localeCompare(b.name));
@@ -469,7 +105,7 @@ const ContactScreen = ({ navigation }) => {
 
     setGroupedContacts(groups);
     setIsLoading(false);
-  }, [array, txtSearcher]);
+  }, [arrayContact, txtSearcher]);
 
   if (isLoading) {
     return (
@@ -534,8 +170,14 @@ const ContactScreen = ({ navigation }) => {
             </View>
             <View style={style.contName}>
               <View style={style.contInfUser}>
-                <Text style={style.txtName}>{"Uldren Gedde"}</Text>
-                <Text style={style.txtInfo}>386 Contacs</Text>
+                <Text style={style.txtName}>{user?.username}</Text>
+                <Text style={style.txtInfo}>
+                  {arrayContact.length === undefined
+                    ? "0"
+                    : arrayContact.length}
+                  {"  "}
+                  Contacts
+                </Text>
               </View>
             </View>
             <View style={style.contIcon}>
@@ -550,22 +192,46 @@ const ContactScreen = ({ navigation }) => {
             height: "30%",
           }}
         >
-          {Object.entries(groupedContacts).map(([letter, contacts]) => {
-            return (
-              <View>
-                <Text style={{ color: "white" }}>{letter}</Text>
-                {contacts.map((contact, index) => {
-                  return (
-                    <Contact
-                      key={index}
-                      onPress={() => onPressHandler(contact)}
-                      contact={contact}
-                    />
-                  );
-                })}
-              </View>
-            );
-          })}
+          {!arrayContact.length ? (
+            <View
+              style={{
+                justifyContent: "center",
+                width: "100%",
+                marginTop: "40%",
+                height: "50%",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: converterHex(Colors.WHITE, 0.7),
+                  fontFamily: "reBold",
+                  fontSize: 25,
+                }}
+              >
+                No tienes contactos
+              </Text>
+            </View>
+          ) : (
+            <>
+              {Object.entries(groupedContacts).map(([letter, contacts]) => {
+                return (
+                  <View>
+                    <Text style={{ color: "white" }}>{letter}</Text>
+                    {contacts.map((contact, index) => {
+                      return (
+                        <Contact
+                          key={index}
+                          onPress={() => onPressHandler(contact)}
+                          contact={contact}
+                        />
+                      );
+                    })}
+                  </View>
+                );
+              })}
+            </>
+          )}
         </View>
       </Animated.ScrollView>
       <Footer />
@@ -576,7 +242,7 @@ const ContactScreen = ({ navigation }) => {
 const style = StyleSheet.create({
   headerDinamic: {
     backgroundColor: Colors.grayColor,
-    marginTop: Platform.OS === "ios" ? "11%" : "6%",
+    marginTop: Platform.OS === "ios" ? "12%" : "7%",
     width: "100%",
     height: "auto",
     display: "flex",
@@ -597,6 +263,7 @@ const style = StyleSheet.create({
     fontFamily: "poBold",
     fontSize: 20,
     color: Colors.WHITE,
+    textTransform: "capitalize",
   },
   txtInfo: {
     color: Colors.GRAY,

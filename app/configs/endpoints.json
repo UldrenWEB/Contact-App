@@ -3,5 +3,8 @@
     "contacts": {
         "list":"contacts/view-contacts",
         "create": "contacts/create-contact"
+    },
+    "user": {
+        "get": "users/user/"
     }
 }

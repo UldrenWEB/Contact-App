@@ -40,7 +40,6 @@ const LoginScreen = ({ navigation }) => {
 
     if (!validateEmail(email)) {
       setIsError({ bool: true, msg: msgs.errorData });
-      console.log("Email invalido");
       return;
     }
 
@@ -70,7 +69,6 @@ const LoginScreen = ({ navigation }) => {
         return;
       }
       await Session.saveSession(result.token);
-
       setEmail("");
       setPassword("");
       setIsLoading(false);

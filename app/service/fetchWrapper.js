@@ -38,7 +38,7 @@ const wrapper = async ({ json, method, endPoint, isToken }) => {
 
     return data;
   } catch (error) {
-    console.log(error.message);
+    console.log("Error", error.message);
     return false;
   }
 };

@@ -11,7 +11,7 @@ const loginStyles = StyleSheet.create({
   },
   containerLogo: {
     padding: "4%",
-    marginTop: "15%",
+    marginTop: "5%",
     marginBottom: "9%",
   },
   descriptionContainer: {

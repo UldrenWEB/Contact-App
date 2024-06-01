@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
@@ -15,15 +16,9 @@ import { useEffect } from "react";
 
 const unknow = require("../resources/image.png");
 
-const user = {
-  username: "Uldren Gedde",
-  email: "uldren@uldren.com",
-  password: "12345678",
-};
-
 const EditProfile = ({ route, navigation }) => {
-  // const { user } = route.params;
-  const [editUser, setEditUser] = useState(user);
+  const { user } = route.params;
+  const [editUser, setEditUser] = useState({ ...user, password: "" });
   const [isModified, setIsModified] = useState(false);
 
   useEffect(() => {
@@ -31,16 +26,22 @@ const EditProfile = ({ route, navigation }) => {
   }, [editUser]);
 
   const validateName = (name) => {
+    if (!name) return true;
+
     const regex = /^[a-zA-Z\s]{3,}$/;
     return regex.test(name);
   };
 
   const validatePassword = (password) => {
+    if (!password) return true;
+
     const regex = /^.{8,}$/;
     return regex.test(password);
   };
 
   const validateEmail = (email) => {
+    if (!email) return true;
+
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu|es)$/;
     return regex.test(email);
   };
@@ -72,7 +73,6 @@ const EditProfile = ({ route, navigation }) => {
     }
 
     if (!error?.bool) {
-      console.log("Todo correcto");
     } else {
       Alert.alert("Error!", error.message, [
         {
@@ -116,7 +116,7 @@ const EditProfile = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-      <View style={style.contInputs}>
+      <ScrollView style={style.contInputs}>
         <View style={style.fieldContainer}>
           <Text style={style.label}>{"Username"}:</Text>
           <TextInput
@@ -147,7 +147,7 @@ const EditProfile = ({ route, navigation }) => {
             }}
           />
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -159,7 +159,7 @@ const style = StyleSheet.create({
   },
   header: {
     width: "100%",
-    height: "30%",
+    height: 250,
     backgroundColor: Colors.grayColor,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
@@ -182,8 +182,9 @@ const style = StyleSheet.create({
   contInputs: {
     display: "flex",
     height: "70%",
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: "7%",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   editTxt: {
     color: Colors.SpiralColor,
@@ -212,6 +213,7 @@ const style = StyleSheet.create({
     fontSize: 30,
     color: Colors.WHITE,
     fontFamily: "poBold",
+    textTransform: "capitalize",
   },
   fieldContainer: {
     display: "flex",
