@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import IconApp from "./IconApp";
 import { contactStyle } from "../styles/contactStyles";
+import { useEffect } from "react";
 
 const unknowImage = require("../resources/unknow.png");
 
@@ -12,7 +13,7 @@ const Contact = ({ contact, onPress }) => {
         <Text style={contactStyle.txtContact}>{contact.name}</Text>
 
         <View style={contactStyle.containerIcons}>
-          {contact?.phoneNumbers.length > 0 && (
+          {contact?.phoneNumbers?.length > 0 && (
             <View>
               <IconApp
                 iconType={"phone"}
@@ -30,7 +31,7 @@ const Contact = ({ contact, onPress }) => {
               />
             </View>
           )}
-          {contact?.phoneNumbers.length > 0 && (
+          {contact?.phoneNumbers?.length > 0 && (
             <View>
               <IconApp
                 iconType={"comment"}
@@ -45,9 +46,4 @@ const Contact = ({ contact, onPress }) => {
   );
 };
 
-<IconApp
-  iconType={"envelope"}
-  colorName={"blue"}
-  arrayData={["uldrenmiguel33@gmail.com"]}
-/>;
 export default Contact;

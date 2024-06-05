@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -17,19 +17,6 @@ import { wrapper } from "../service/fetchWrapper";
 import { contacts as endPoint } from "../configs/endpoints.json";
 
 const unknowImage = require("../resources/image.png");
-
-// const contact = {
-//   _id: "1",
-//   name: "Marcial",
-//   lastName: "Hernandez",
-//   phoneNumber: [
-//     { home: "0426891239" },
-//     { work: "04120668975" },
-//     { personal: "0414789325" },
-//   ],
-//   email: "marcial@example.com",
-//   userId: "3",
-// };
 
 const DetailContactScreen = ({ route, navigation }) => {
   const { id } = route.params;
@@ -67,7 +54,7 @@ const DetailContactScreen = ({ route, navigation }) => {
         type: "icon",
         compo: (
           <>
-            <View>
+            <View key={`${contact.phoneNumber} + 2`}>
               <IconApp
                 iconType={"comment"}
                 colorName={"blue"}
@@ -76,7 +63,7 @@ const DetailContactScreen = ({ route, navigation }) => {
                 )}
               />
             </View>
-            <View>
+            <View key={`${contact.phoneNumber} + 1`}>
               <IconApp
                 iconType={"phone"}
                 colorName={"pink"}
@@ -91,7 +78,7 @@ const DetailContactScreen = ({ route, navigation }) => {
       data.push({
         type: "field",
         compo: (
-          <View>
+          <View key={contact.phoneNumber}>
             <FieldContact label={"PhoneNumber"} value={contact.phoneNumber} />
           </View>
         ),
@@ -101,7 +88,7 @@ const DetailContactScreen = ({ route, navigation }) => {
       data.push({
         type: "icon",
         compo: (
-          <View>
+          <View key={contact.email}>
             <IconApp
               iconType={"envelope"}
               colorName={"blue"}
@@ -113,7 +100,7 @@ const DetailContactScreen = ({ route, navigation }) => {
       data.push({
         type: "field",
         compo: (
-          <View>
+          <View key={contact.email}>
             <FieldContact label={"Email"} value={contact.email} />
           </View>
         ),
@@ -123,7 +110,7 @@ const DetailContactScreen = ({ route, navigation }) => {
       data.push({
         type: "field",
         compo: (
-          <View>
+          <View key={contact.address}>
             <FieldContact label={"Address"} value={contact.address} />
           </View>
         ),
@@ -158,7 +145,7 @@ const DetailContactScreen = ({ route, navigation }) => {
           <View style={style.contDetail}>
             <Image style={style.styleImage} source={unknowImage} />
             <View>
-              <Text style={style.txtName}>Vena Celencia</Text>
+              <Text style={style.txtName}>{contact.name}</Text>
             </View>
             <View style={style.contIcon}>
               {contactData
@@ -227,10 +214,10 @@ const style = StyleSheet.create({
   },
   styleImage: {
     width: "36.5%",
-    height: "65%",
+    height: "69%",
   },
   contDetail: {
-    marginTop: "-10%",
+    marginTop: "-12%",
     display: "flex",
     gap: 5,
     flexDirection: "column",
@@ -241,14 +228,14 @@ const style = StyleSheet.create({
     fontSize: 30,
     color: Colors.WHITE,
     fontFamily: "poBold",
+    textTransform: "capitalize",
   },
   contIcon: {
-    borderColor: "green",
-    borderWidth: 1,
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: "-3%",
     width: "50%",
     height: "30%",
   },

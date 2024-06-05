@@ -18,7 +18,8 @@ const unknowImage = require("../resources/image.png");
 
 const EditScreen = ({ route, navigation }) => {
   const { contact } = route.params;
-  const [editedContact, setEditedContact] = useState(contact);
+  const { updatedAt, createdAt, ...filteredContact } = contact;
+  const [editedContact, setEditedContact] = useState(filteredContact);
   const [isModified, setIsModified] = useState(false);
 
   useEffect(() => {
@@ -152,9 +153,7 @@ const EditScreen = ({ route, navigation }) => {
           <View style={style.contDetail}>
             <Image style={style.styleImage} source={unknowImage} />
             <View>
-              <Text style={style.txtName}>
-                {editedContact.name + " " + editedContact.lastName}
-              </Text>
+              <Text style={style.txtName}>{editedContact.name}</Text>
             </View>
           </View>
         </View>
@@ -175,7 +174,6 @@ const style = StyleSheet.create({
   container: {
     backgroundColor: Colors.BLACK,
     flex: 1,
-    // alignItems: "center",
   },
   error: {
     color: "red",
@@ -221,8 +219,8 @@ const style = StyleSheet.create({
     height: "60%",
   },
   styleImage: {
-    width: "35%",
-    height: "68%",
+    width: "32%",
+    height: "69%",
   },
   contDetail: {
     marginTop: "-7%",

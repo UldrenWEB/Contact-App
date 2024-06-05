@@ -30,7 +30,7 @@ const ContactScreen = ({ navigation }) => {
   const [groupedContacts, setGroupedContacts] = useState({});
   const scrollY = new Animated.Value(0);
   const [arrayContact, setArrayContacts] = useState("");
-  const { user, updateUser } = useContext(userContext);
+  const { user } = useContext(userContext);
 
   useValidateSession(navigation);
 
@@ -58,14 +58,11 @@ const ContactScreen = ({ navigation }) => {
     useCallback(() => {
       const contacts = async () => {
         setIsLoading(true);
-        console.log("se ejecuto");
         const result = await wrapper({
           method: "get",
           endPoint: endPoint.list,
           isToken: true,
         });
-
-        console.log("Contactos", result);
 
         if (!result) return setIsLoading(false);
 
@@ -208,8 +205,10 @@ const ContactScreen = ({ navigation }) => {
             <>
               {Object.entries(groupedContacts).map(([letter, contacts]) => {
                 return (
-                  <View>
-                    <Text style={{ color: "white" }}>{letter}</Text>
+                  <View key={letter}>
+                    <Text key={letter} style={style.textABC}>
+                      {letter}
+                    </Text>
                     {contacts.map((contact, index) => {
                       return (
                         <Contact
@@ -268,6 +267,13 @@ const style = StyleSheet.create({
   contIcon: {
     marginVertical: "auto",
     marginLeft: "10%",
+  },
+  textABC: {
+    color: Colors.WHITE,
+    marginTop: 10,
+    marginLeft: 10,
+    fontFamily: "reRegular",
+    fontSize: 15,
   },
 });
 

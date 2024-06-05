@@ -5,6 +5,12 @@
         "get":"contacts/view-contact",
         "create": "contacts/create-contact"
     },
+    "groups": {
+        "get": "groups/list-groups",
+        "create": "groups/create-group",
+        "addContact": "groups/groups/add-contacts",
+        "delete": "groups/delete-group/"
+    },
     "user": {
         "get": "users/user/"
     }
