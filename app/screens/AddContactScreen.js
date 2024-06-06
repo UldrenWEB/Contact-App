@@ -10,7 +10,6 @@ import Colors from "../styles/Colors";
 
 import AddComponent from "../components/AddComponent";
 import HeaderMinimal from "../components/headerMinimal";
-import Session from "../storage/sessionStorage";
 import { wrapper } from "../service/fetchWrapper";
 
 import { contacts } from "../configs/endpoints.json";
@@ -59,7 +58,7 @@ const AddContactScreen = ({ navigation, route }) => {
   };
 
   const validateName = (name) => {
-    const re = /^[a-zA-Z\s]*$/;
+    const re = /^[a-zA-Z\s]{1,13}$/;
     return re.test(name);
   };
 
@@ -72,7 +71,7 @@ const AddContactScreen = ({ navigation, route }) => {
   const validatePhoneNumber = (number) => {
     if (!number) return true;
 
-    const re = /^\+\d{6,}$/;
+    const re = /^\+?\d{8,11}$/;
     return re.test(number);
   };
 
@@ -82,8 +81,9 @@ const AddContactScreen = ({ navigation, route }) => {
     if (!validateName(editedName)) {
       Alert.alert(
         "Error",
-        "Debe introducir un nombre valido sin caracteres especiales"
+        "Debe introducir un nombre valido sin caracteres especiales y con un maximo de 13 caracteres"
       );
+      return;
     }
 
     if (!validateUniqueName(editedName)) {
@@ -114,8 +114,8 @@ const AddContactScreen = ({ navigation, route }) => {
     }
     if (
       !validatePhoneNumber(editedPhones.home) ||
-      !validatePhoneNumber(editedPhones.home) ||
-      !validatePhoneNumber(editedPhones.home)
+      !validatePhoneNumber(editedPhones.work) ||
+      !validatePhoneNumber(editedPhones.personal)
     ) {
       Alert.alert("Error", "Debe introducir un numero telefonico valido");
       return;
@@ -123,7 +123,7 @@ const AddContactScreen = ({ navigation, route }) => {
 
     const obj = {
       name: editedName,
-      email: editedEmail,
+      ...(editedEmail === "" ? {} : { email: editedEmail }),
       address: editedAddress,
       phoneNumbers:
         editedPhones.work && editedPhones.home && editedPhones.personal
@@ -147,12 +147,15 @@ const AddContactScreen = ({ navigation, route }) => {
         json: obj,
       });
 
-      if (!result)
-        return Alert.alert("Error", "Hubo un error al hacer la consulta");
+      console.log("Aqui creacion", result);
+
+      if (!result || !result.contact)
+        return Alert.alert("Error", "No se pudo crear el nuevo usuario");
 
       Alert.alert("Created", "Se ha creado exitosamente el contacto", [
         { text: "OK" },
       ]);
+      navigation.navigate("Prueba");
 
       console.log(result);
       return true;
@@ -192,7 +195,7 @@ const AddContactScreen = ({ navigation, route }) => {
         <AddComponent
           label={"Name"}
           heigthMin={70}
-          heightMax={98}
+          heightMax={105}
           marginBottom={"8%"}
           sizeLabel={18}
           textInput={editedName}
@@ -203,7 +206,7 @@ const AddContactScreen = ({ navigation, route }) => {
         <AddComponent
           label={"Email"}
           heigthMin={70}
-          heightMax={98}
+          heightMax={105}
           marginBottom={"8%"}
           sizeLabel={18}
           textInput={editedEmail}
@@ -213,7 +216,7 @@ const AddContactScreen = ({ navigation, route }) => {
         />
         <AddComponent
           heigthMin={70}
-          heightMax={98}
+          heightMax={105}
           label={"Address"}
           marginBottom={"8%"}
           sizeLabel={18}

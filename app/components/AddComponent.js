@@ -180,9 +180,9 @@ const style = StyleSheet.create({
     borderColor: Colors.WHITE,
     color: Colors.SpiralColor,
     fontFamily: "poBold",
-    height: 32,
+    height: 40,
     paddingHorizontal: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
   contEmail: {
     backgroundColor: Colors.grayColor,

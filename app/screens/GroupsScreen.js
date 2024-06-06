@@ -81,7 +81,6 @@ const GroupScreen = ({ navigation }) => {
   };
 
   const handlerNavigation = (group) => {
-    console.log("Info del grupo a detail", group);
     navigation.navigate("GroupDetail", { group });
   };
 

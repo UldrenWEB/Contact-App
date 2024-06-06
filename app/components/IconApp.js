@@ -92,7 +92,7 @@ const IconApp = ({
           onPress={onPressHandler}
         >
           <Icon
-            size={25}
+            size={20}
             type="font-awesome"
             name={iconTypeFormatted}
             color={colorToUse.tint}
@@ -117,8 +117,8 @@ const style = StyleSheet.create({
     borderRadius: 999,
     borderColor: Colors.SpiralColor,
     margin: 5,
-    width: 43,
-    height: 40,
+    width: 37,
+    height: 34,
     overflow: "hidden",
   },
   containerIcon: {

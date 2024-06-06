@@ -39,7 +39,7 @@ const loginStyles = StyleSheet.create({
   txtLogo: {
     color: Colors.GRAY,
     fontFamily: "reBold",
-    fontSize: 30,
+    fontSize: 15,
     margin: "auto",
     marginTop: "4%",
   },
@@ -51,7 +51,7 @@ const loginStyles = StyleSheet.create({
   txtToRegister: {
     color: Colors.SpiralColor,
     fontFamily: "poBold",
-    fontSize: 15,
+    fontSize: 12,
   },
   containerByTxt: {
     borderBottomWidth: 1,

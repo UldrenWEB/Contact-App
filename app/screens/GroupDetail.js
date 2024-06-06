@@ -146,7 +146,7 @@ const MyGroupDetail = ({ navigation, route }) => {
       if (!result)
         Alert.alert("Error", "No se pudo borrar correctamente el grupo");
 
-      navigation.goBack();
+      navigation.navigate("Prueba");
     } catch (error) {
       Alert.alert("Error", "Ocurrio un error al borrar el grupo");
     }

@@ -15,15 +15,15 @@ const registerStyle = StyleSheet.create({
   containerLogo: {
     padding: "4%",
     marginTop: "3%",
-    marginBottom: "0%",
+    marginBottom: "4%",
     margin: "auto",
   },
   txtLogo: {
     color: Colors.GRAY,
     fontFamily: "reBold",
-    fontSize: 30,
+    fontSize: 16,
     margin: "auto",
-    marginTop: "0%",
+    marginTop: "1%",
   },
   containerText: {
     marginHorizontal: "auto",
@@ -32,7 +32,7 @@ const registerStyle = StyleSheet.create({
   },
   textToLogin: {
     color: Colors.SpiralColor,
-    fontSize: 15,
+    fontSize: 12,
     margin: "auto",
     fontFamily: "poBold",
   },

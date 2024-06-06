@@ -32,10 +32,10 @@ const MyInput = ({
         borderBottomWidth: 0,
       }}
       inputStyle={{
-        fontSize: 18,
+        fontSize: 16,
         paddingVertical: 10,
         paddingHorizontal: 8,
-        marginTop: 12,
+        marginTop: 5,
         color: Colors.SpiralColor,
         fontFamily: "poBold",
       }}
