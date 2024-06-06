@@ -18,7 +18,7 @@ const unknowImage = require("../resources/image.png");
 
 const EditScreen = ({ route, navigation }) => {
   const { contact } = route.params;
-  const { updatedAt, createdAt, ...filteredContact } = contact;
+  const { updatedAt, createdAt, __v, ...filteredContact } = contact;
   const [editedContact, setEditedContact] = useState(filteredContact);
   const [isModified, setIsModified] = useState(false);
 
@@ -47,22 +47,21 @@ const EditScreen = ({ route, navigation }) => {
         bool: true,
       };
     }
-    if (Array.isArray(editedContact.phoneNumber)) {
-      editedContact.phoneNumber.forEach((element) => {
-        Object.values(element).map((item, i) => {
-          if (!validatePhoneNumber(item)) {
-            error = {
-              message:
-                "El número de teléfono solo debe contener '+' y números.",
-              bool: true,
-            };
-          }
-        });
+    if (Array.isArray(editedContact.phoneNumbers)) {
+      editedContact.phoneNumbers.forEach((element) => {
+        console.log(element.number);
+        if (!validatePhoneNumber(element.number)) {
+          error = {
+            message: "El número de teléfono solo debe contener '+' y números.",
+            bool: true,
+          };
+        }
       });
     }
 
     if (!error?.bool) {
-      console.log("Todo correcto");
+      //Aqui entraria para editar el contacto
+      console.log("Esta es la info del contacto a editar", editedContact);
     } else {
       Alert.alert("Error!", error.message, [
         {
@@ -80,26 +79,24 @@ const EditScreen = ({ route, navigation }) => {
   };
 
   const renderField = (key, value, index) => {
-    if (key === "phoneNumber") {
+    if (key === "phoneNumbers") {
+      if (value.length <= 0) return;
+
       return (
         <View style={style.fieldContainer} key={index}>
           <Text style={style.label}>{key}:</Text>
           {value.map((item, i) => (
             <View key={i}>
-              {Object.entries(item).map(([k, v]) => (
-                <View key={k}>
-                  <Text style={style.subLabel}>{k}:</Text>
-                  <TextInput
-                    style={style.input}
-                    value={v}
-                    onChangeText={(text) => {
-                      let newContact = { ...editedContact };
-                      newContact[key][i][k] = text;
-                      setEditedContact(newContact);
-                    }}
-                  />
-                </View>
-              ))}
+              <Text style={style.subLabel}>{item.type}:</Text>
+              <TextInput
+                style={style.input}
+                value={item.number}
+                onChangeText={(text) => {
+                  let newContact = { ...editedContact };
+                  newContact[key][i].number = text;
+                  setEditedContact(newContact);
+                }}
+              />
             </View>
           ))}
         </View>
@@ -127,7 +124,7 @@ const EditScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={style.container}>
+    <View style={style.container}>
       {/* <View style={style.container}> */}
       <StatusBar backgroundColor={Colors.BLACK} translucent={true} />
       <View style={style.header}>
@@ -166,7 +163,7 @@ const EditScreen = ({ route, navigation }) => {
         })}
       </ScrollView>
       {/* </View> */}
-    </ScrollView>
+    </View>
   );
 };
 
@@ -182,7 +179,7 @@ const style = StyleSheet.create({
   },
   header: {
     width: "100%",
-    height: "30%",
+    height: 250,
     backgroundColor: Colors.grayColor,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
@@ -219,8 +216,8 @@ const style = StyleSheet.create({
     height: "60%",
   },
   styleImage: {
-    width: "32%",
-    height: "69%",
+    width: "30%",
+    height: "70%",
   },
   contDetail: {
     marginTop: "-7%",

@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [isError, setIsError] = useState({ bool: false, msg: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const { user, updateUser } = useContext(userContext);
+  const { updateUser } = useContext(userContext);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -88,7 +88,6 @@ const LoginScreen = ({ navigation }) => {
       setPassword("");
       setIsLoading(false);
       navigation.navigate("Prueba");
-      setIsError({ bool: false, msg: "" });
     } catch (error) {
       return Alert.alert("Error", `${error.message}`);
     }

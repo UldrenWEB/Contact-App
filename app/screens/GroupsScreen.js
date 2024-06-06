@@ -16,6 +16,7 @@ import HeaderMinimal from "../components/headerMinimal";
 import { wrapper } from "../service/fetchWrapper";
 import { groups as endPoint } from "../configs/endpoints.json";
 import { useFocusEffect } from "@react-navigation/native";
+import { converterHex } from "../service/converterHex";
 
 const GroupScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,8 +35,7 @@ const GroupScreen = ({ navigation }) => {
       });
       setIsLoading(false);
 
-      if (!result || !result.length)
-        return Alert.alert("Error", "Hubo un error al buscar tus grupos");
+      if (!result || !result.length) return;
 
       setGroups(result);
     } catch (error) {
@@ -150,7 +150,15 @@ const GroupScreen = ({ navigation }) => {
         />
         <View style={style.contProp}>
           {(groups ?? []).length <= 0 ? (
-            <Text style={{ color: "white" }}>
+            <Text
+              style={{
+                color: converterHex(Colors.WHITE, 0.7),
+                fontFamily: "reBold",
+                fontSize: 19,
+                textAlign: "center",
+                marginTop: "19%",
+              }}
+            >
               Crea un nuevo grupo para una mejor organizacion
             </Text>
           ) : (

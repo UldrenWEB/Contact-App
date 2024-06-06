@@ -19,7 +19,10 @@ const HeaderMinimal = ({ navigation, title, btnName, onPress }) => {
             size={24}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={onPress} style={style.btnSave}>
+        <TouchableOpacity
+          onPress={onPress}
+          style={btnName === " " ? "" : style.btnSave}
+        >
           <Text style={style.txtSave}>{btnName}</Text>
         </TouchableOpacity>
       </View>

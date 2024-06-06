@@ -7,12 +7,17 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Icon } from "react-native-elements";
 import { converterHex } from "../service/converterHex";
 import Colors from "../styles/Colors";
 import { useEffect } from "react";
+import { wrapper } from "../service/fetchWrapper";
+import { user as endPoint } from "../configs/endpoints.json";
+import userContext from "../customs/userContext";
+import Session from "../storage/sessionStorage";
 
 const unknow = require("../resources/image.png");
 
@@ -20,9 +25,13 @@ const EditProfile = ({ route, navigation }) => {
   const { user } = route.params;
   const [editUser, setEditUser] = useState({ ...user, password: "" });
   const [isModified, setIsModified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { updateUser } = useContext(userContext);
 
   useEffect(() => {
-    setIsModified(JSON.stringify(user) !== JSON.stringify(editUser));
+    setIsModified(
+      JSON.stringify({ ...user, password: "" }) !== JSON.stringify(editUser)
+    );
   }, [editUser]);
 
   const validateName = (name) => {
@@ -46,7 +55,7 @@ const EditProfile = ({ route, navigation }) => {
     return regex.test(email);
   };
 
-  const saveHandlerPress = () => {
+  const saveHandlerPress = async () => {
     if (!isModified) return;
 
     let error;
@@ -73,6 +82,37 @@ const EditProfile = ({ route, navigation }) => {
     }
 
     if (!error?.bool) {
+      try {
+        setIsLoading(true);
+
+        let obj = {
+          username: editUser.username,
+          email: editUser.email,
+          newPassword: editUser.password,
+        };
+
+        if (!editUser.password) {
+          obj = {
+            username: editUser.username,
+            email: editUser.email,
+          };
+        }
+        const result = await wrapper({
+          method: "put",
+          endPoint: `${endPoint.edit}`,
+          isToken: true,
+          json: obj,
+        });
+        setIsLoading(false);
+
+        if (!result || !result.username)
+          return Alert.alert("Error", "No se edito correctamente el usuario");
+
+        updateUser(result);
+        Alert.alert("Success", "Se edito correctamente el usuario");
+      } catch (error) {
+        return Alert.alert("Error hubo un error en la consulta");
+      }
     } else {
       Alert.alert("Error!", error.message, [
         {
@@ -89,6 +129,24 @@ const EditProfile = ({ route, navigation }) => {
   const backHandlerPress = () => {
     navigation.goBack();
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: Colors.BLACK,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </>
+    );
+  }
 
   return (
     <View style={style.container}>

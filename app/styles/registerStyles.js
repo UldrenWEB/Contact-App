@@ -9,13 +9,13 @@ const registerStyle = StyleSheet.create({
   containerInputs: {
     display: "flex",
     flexDirection: "column",
-    gap: 1,
+    gap: 0,
     marginHorizontal: "3.5%",
   },
   containerLogo: {
     padding: "4%",
-    marginTop: "15%",
-    marginBottom: "9%",
+    marginTop: "3%",
+    marginBottom: "0%",
     margin: "auto",
   },
   txtLogo: {
@@ -23,7 +23,7 @@ const registerStyle = StyleSheet.create({
     fontFamily: "reBold",
     fontSize: 30,
     margin: "auto",
-    marginTop: "4%",
+    marginTop: "0%",
   },
   containerText: {
     marginHorizontal: "auto",

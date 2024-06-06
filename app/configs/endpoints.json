@@ -1,17 +1,25 @@
 {
     "login": "users/login",
+    "register": "users/register",
     "contacts": {
         "list":"contacts/view-contacts",
         "get":"contacts/view-contact",
-        "create": "contacts/create-contact"
+        "create": "contacts/create-contact",
+        "delete": "contacts/delete-contact/"
     },
     "groups": {
         "get": "groups/list-groups",
         "create": "groups/create-group",
         "addContact": "groups/groups/add-contacts",
-        "delete": "groups/delete-group/"
+        "delete": "groups/delete-group/",
+        "deleteContact": "groups/groups/"
     },
     "user": {
-        "get": "users/user/"
+        "get": "users/user/",
+        "edit": "users/edit-profile",
+        "delete": "users/delete-account"
+    },
+    "favorites": {
+
     }
 }

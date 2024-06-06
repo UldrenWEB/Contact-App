@@ -9,22 +9,32 @@ import {
   StatusBar,
   Animated,
   Platform,
+  Alert,
 } from "react-native";
 import useValidateSession from "../customs/useValidateSession";
+import {
+  ActionSheetProvider,
+  useActionSheet,
+} from "@expo/react-native-action-sheet";
 import Contact from "../components/Contact";
 import HeaderContact from "../components/HeaderContact";
 import Colors from "../styles/Colors";
 import { Icon } from "react-native-elements";
 import Footer from "../components/Footer";
-import { contacts as endPoint } from "../configs/endpoints.json";
+import {
+  contacts as endPoint,
+  user as endPointUser,
+} from "../configs/endpoints.json";
 import { wrapper } from "../service/fetchWrapper";
 import { converterHex } from "../service/converterHex";
 import userContext from "../customs/userContext.js";
 import { useFocusEffect } from "@react-navigation/native";
+import Session from "../storage/sessionStorage.js";
 
 const unknow = require("../resources/FotoPerfil.png");
 
-const ContactScreen = ({ navigation }) => {
+const MyContactScreen = ({ navigation }) => {
+  const { showActionSheetWithOptions } = useActionSheet();
   const [isLoading, setIsLoading] = useState(true);
   const [txtSearcher, setTxtSearcher] = useState("");
   const [groupedContacts, setGroupedContacts] = useState({});
@@ -42,8 +52,85 @@ const ContactScreen = ({ navigation }) => {
     navigation.navigate("AddContact", { currentContacts: arrayContact });
   };
 
+  const deleteAccount = async () => {
+    let bool = false;
+
+    Alert.alert("Seguro?", "Deseas eliminar tu cuenta", [
+      {
+        text: "Ok",
+        onPress: async () => {
+          try {
+            setIsLoading(true);
+            const result = await wrapper({
+              method: "delete",
+              endPoint: `${endPointUser.delete}`,
+              isToken: true,
+            });
+            setIsLoading(false);
+
+            if (!result) Alert.alert("Error", "No se puedo borrar la cuenta");
+
+            Alert.alert("Success", "Se ha eliminado correctamente la cuenta");
+            navigation.navigate("Register");
+          } catch (error) {
+            Alert.alert("Error", "Hubo un error a eliminar cuenta");
+          }
+        },
+      },
+      {
+        text: "Cancelar",
+        onPress: () => {
+          bool = false;
+        },
+      },
+    ]);
+  };
+
+  const closeSession = async () => {
+    try {
+      await Session.deleteSession();
+      navigation.navigate("Login");
+    } catch (error) {
+      Alert.alert("Error", "Hubo un error al cerrar session");
+    }
+  };
+
+  const editProfile = () => {
+    navigation.navigate("EditProfile", { user });
+  };
+
   const onPressToProfileHandler = () => {
-    console.log("Mostrar modal");
+    const options = [
+      "Close session",
+      "Edit perfil",
+      "Delete account",
+      "Cancelar",
+    ];
+    const destructiveButtonIndex = 3;
+    const cancelButtonIndex = 3;
+
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+        destructiveButtonIndex,
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 0:
+            closeSession();
+            break;
+          case 1:
+            editProfile();
+            break;
+          case 2:
+            deleteAccount();
+            break;
+          default:
+            break;
+        }
+      }
+    );
   };
 
   const onPressRedirectProfileHandler = () => {
@@ -277,4 +364,10 @@ const style = StyleSheet.create({
   },
 });
 
-export default ContactScreen;
+export default function ContactScreen(props) {
+  return (
+    <ActionSheetProvider>
+      <MyContactScreen {...props} />
+    </ActionSheetProvider>
+  );
+}

@@ -5,94 +5,100 @@ import Colors from "../styles/Colors";
 import { wrapper } from "../service/fetchWrapper";
 import { contacts as endPoint } from "../configs/endpoints.json";
 
-const CheckBoxComponent = forwardRef(({ text = false }, ref) => {
-  const [contacts, setContacts] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [filterContact, setFilterContacts] = useState([]);
+const CheckBoxComponent = forwardRef(
+  ({ text = false, currentContacts = [] }, ref) => {
+    const [contacts, setContacts] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [filterContact, setFilterContacts] = useState([]);
 
-  useEffect(() => {
-    const contact = async () => {
-      try {
-        const result = await wrapper({
-          method: "get",
-          endPoint: `${endPoint.list}`,
-          isToken: true,
-        });
+    useEffect(() => {
+      const contact = async () => {
+        try {
+          const result = await wrapper({
+            method: "get",
+            endPoint: `${endPoint.list}`,
+            isToken: true,
+          });
 
-        if (!result || !result?.length)
-          Alert.alert(
-            "Error",
-            "No trajo datos la consulta, por lo que se infiere que es un error"
+          if (!result || !result?.length) {
+            return Alert.alert("Error", "Aun no tienes contactos para asignar");
+          }
+
+          console.log("Aqui corrientes", currentContacts);
+          const filteredResult = result.filter(
+            (contact) =>
+              !currentContacts.some((current) => current._id === contact._id)
           );
 
-        setContacts(result);
-      } catch (error) {
-        return Alert.alert("Error", "Hubo un error al hacer la consulta");
-      }
-    };
-    contact();
-  }, []);
+          setContacts(filteredResult);
+        } catch (error) {
+          return Alert.alert("Error", "Hubo un error al hacer la consulta");
+        }
+      };
+      contact();
+    }, []);
 
-  useEffect(() => {
-    if (text) {
-      const lowerCaseText = text.toLowerCase();
-      const filtered = contacts.filter((contact) =>
-        contact.name.toLowerCase().startsWith(lowerCaseText)
-      );
-      setFilterContacts(filtered);
-    } else {
-      setFilterContacts(contacts);
-    }
-  }, [text, contacts]);
-
-  const handleSelect = (contact) => {
-    setSelectedOptions((prevOptions) => [...prevOptions, contact]);
-  };
-
-  const handleDeselect = (contactId) => {
-    setSelectedOptions((prevOptions) =>
-      prevOptions.filter((option) => option._id !== contactId)
-    );
-  };
-
-  useImperativeHandle(ref, () => selectedOptions);
-
-  return (
-    <ScrollView style={style.container}>
-      {filterContact.map((contact) => {
-        return (
-          <View style={style.contact} key={contact?._id}>
-            <CheckBox
-              containerStyle={{
-                backgroundColor: Colors.BLACK,
-                width: "90%",
-                justifyContent: "center",
-                height: 50,
-                marginBottom: 10,
-              }}
-              textStyle={{
-                fontFamily: "poBold",
-                fontSize: 15,
-                color: Colors.WHITE,
-                textAlignVertical: "center",
-              }}
-              checkedColor={Colors.SpiralColor}
-              title={contact.name}
-              checked={selectedOptions.some(
-                (option) => option._id === contact._id
-              )}
-              onPress={() =>
-                selectedOptions.some((option) => option._id === contact._id)
-                  ? handleDeselect(contact._id)
-                  : handleSelect(contact)
-              }
-            />
-          </View>
+    useEffect(() => {
+      if (text) {
+        const lowerCaseText = text.toLowerCase();
+        const filtered = contacts.filter((contact) =>
+          contact.name.toLowerCase().startsWith(lowerCaseText)
         );
-      })}
-    </ScrollView>
-  );
-});
+        setFilterContacts(filtered);
+      } else {
+        setFilterContacts(contacts);
+      }
+    }, [text, contacts]);
+
+    const handleSelect = (contact) => {
+      setSelectedOptions((prevOptions) => [...prevOptions, contact]);
+    };
+
+    const handleDeselect = (contactId) => {
+      setSelectedOptions((prevOptions) =>
+        prevOptions.filter((option) => option._id !== contactId)
+      );
+    };
+
+    useImperativeHandle(ref, () => selectedOptions);
+
+    return (
+      <ScrollView style={style.container}>
+        {filterContact.map((contact) => {
+          return (
+            <View style={style.contact} key={contact?._id}>
+              <CheckBox
+                containerStyle={{
+                  backgroundColor: Colors.BLACK,
+                  width: "90%",
+                  justifyContent: "center",
+                  height: 50,
+                  marginBottom: 10,
+                }}
+                textStyle={{
+                  fontFamily: "poBold",
+                  fontSize: 15,
+                  color: Colors.WHITE,
+                  textAlignVertical: "center",
+                }}
+                checkedColor={Colors.SpiralColor}
+                title={contact.name}
+                checked={selectedOptions.some(
+                  (option) => option._id === contact._id
+                )}
+                onPress={() =>
+                  selectedOptions.some((option) => option._id === contact._id)
+                    ? handleDeselect(contact._id)
+                    : handleSelect(contact)
+                }
+              />
+            </View>
+          );
+        })}
+      </ScrollView>
+    );
+  }
+);
 
 const style = StyleSheet.create({
   container: {

@@ -8,12 +8,10 @@ const FieldContact = ({ label, value }) => {
       {Array.isArray(value) ? (
         value.map((item, index) => (
           <View key={index} style={style.arrayItemContainer}>
-            {Object.keys(item).map((key, i) => (
-              <View key={i} style={style.arrayItemContainer}>
-                <Text style={style.arrayItemLabel}>{key}:</Text>
-                <Text style={style.arrayItemValue}>{item[key]}</Text>
-              </View>
-            ))}
+            <View style={style.arrayItemContainer}>
+              <Text style={style.arrayItemLabel}>{item.type}</Text>
+              <Text style={style.arrayItemValue}>{item.number}</Text>
+            </View>
           </View>
         ))
       ) : (

@@ -129,11 +129,15 @@ const AddContactScreen = ({ navigation, route }) => {
         editedPhones.work && editedPhones.home && editedPhones.personal
           ? []
           : [
-              { type: "personal", number: editedPhones.personal },
-              { type: "work", number: editedPhones.work },
-              { type: "home", number: editedPhones.home },
-            ],
+              { type: "personal", number: `${editedPhones.personal}` },
+              { type: "work", number: `${editedPhones.work}` },
+              { type: "home", number: `${editedPhones.home}` },
+            ].filter(
+              (phone) => phone.number !== "undefined" && phone.number !== ""
+            ),
     };
+
+    console.log("Aqui nuevo contacto", obj);
 
     try {
       const result = await wrapper({

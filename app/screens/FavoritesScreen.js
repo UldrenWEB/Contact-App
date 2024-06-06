@@ -29,19 +29,19 @@ import { useFocusEffect } from "@react-navigation/native";
 import Session from "../storage/sessionStorage";
 import userContext from "../customs/userContext";
 
-const MyGroupDetail = ({ navigation, route }) => {
+const MyFavoritesScreen = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const [txtSearcher, setTxtSearcher] = useState("");
   const [textSearcherContact, setTextSearcherContact] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [groupedContacts, setGroupedContacts] = useState([]);
+  const [groupedContacts, setGroupedContacts] = useState({});
   const { user } = useContext(userContext);
+  const [arrayContact, setArrayContacts] = useState([]);
+  const [group, setGroup] = useState({});
 
-  const { group } = route.params;
-
-  const [arrayContact, setArrayContacts] = useState(group.contacts);
   const contactRef = useRef();
+
+  const deleteHandler = () => {};
 
   useEffect(() => {
     if (!arrayContact) return;
@@ -82,12 +82,18 @@ const MyGroupDetail = ({ navigation, route }) => {
             isToken: true,
           });
 
-          if (!result || !result.length)
-            return Alert.alert("Error", "Hubo un error al buscar tus grupos");
+          console.log("Aqui grupos en vista favorites", result);
 
-          const theGroup = result.find((myGroup) => myGroup._id === group._id);
-          setArrayContacts(theGroup.contacts);
+          if (!result || !result.length) return;
+
+          const theGroup = result.find(
+            (myGroup) => myGroup.name === "Favoritos"
+          );
+          console.log("Aqui grupo favorites y eso", theGroup);
+          setGroup(theGroup);
+          setArrayContacts(theGroup?.contacts);
         } catch (error) {
+          console.log("Error", error.message);
           Alert.alert(
             "Error",
             "Hubo un error al cargar los contactos del grupo"
@@ -98,58 +104,8 @@ const MyGroupDetail = ({ navigation, route }) => {
       groups();
     }, [])
   );
-
   const addHandler = () => {
     setModalVisible(true);
-  };
-
-  const saveHandler = async () => {
-    const contacts = contactRef.current;
-    if (!contacts) return setModalVisible(false);
-
-    try {
-      setIsLoading(true);
-      const result = await wrapper({
-        method: "post",
-        endPoint: `${endPoint.addContact}`,
-        isToken: true,
-        json: {
-          groupId: group._id,
-          contactIds: contacts?.map((contact) => contact._id),
-        },
-      });
-      setIsLoading(false);
-
-      if (!result)
-        Alert.alert(
-          "Error",
-          "No se asignaron correctamente los contactos al grupo"
-        );
-
-      setArrayContacts((prevContacts) => prevContacts.concat(contacts));
-      setModalVisible(false);
-    } catch (error) {
-      return Alert.alert("Error", "Hubo un error al realizar la consulta");
-    }
-  };
-
-  const deleteHandler = async () => {
-    try {
-      setIsLoading(true);
-      const result = await wrapper({
-        method: "delete",
-        endPoint: `${endPoint.delete}${group._id}`,
-        isToken: true,
-      });
-      setIsLoading(false);
-
-      if (!result)
-        Alert.alert("Error", "No se pudo borrar correctamente el grupo");
-
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert("Error", "Ocurrio un error al borrar el grupo");
-    }
   };
 
   const deleteAccount = async () => {
@@ -234,30 +190,35 @@ const MyGroupDetail = ({ navigation, route }) => {
     );
   };
 
-  const onPressHandler = (contact) => {
-    navigation.navigate("DetailContactGroup", {
-      id: contact._id,
-      groupId: group._id,
-    });
-  };
+  const saveHandler = async () => {
+    const contacts = contactRef.current;
+    if (!contacts.length) return setModalVisible(false);
 
-  if (isLoading) {
-    return (
-      <>
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: Colors.BLACK,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      </>
-    );
-  }
+    try {
+      setIsLoading(true);
+      const result = await wrapper({
+        method: "post",
+        endPoint: `${endPoint.addContact}`,
+        isToken: true,
+        json: {
+          groupId: group._id,
+          contactIds: contacts?.map((contact) => contact._id),
+        },
+      });
+      setIsLoading(false);
+
+      if (!result)
+        Alert.alert(
+          "Error",
+          "No se asignaron correctamente los contactos al grupo"
+        );
+
+      setArrayContacts((prevContacts) => prevContacts.concat(contacts));
+      setModalVisible(false);
+    } catch (error) {
+      return Alert.alert("Error", "Hubo un error al realizar la consulta");
+    }
+  };
 
   return (
     <View style={style.container}>
@@ -305,10 +266,10 @@ const MyGroupDetail = ({ navigation, route }) => {
       </ReactNativeModal>
 
       <HeaderMinimal
-        btnName={"Eliminar"}
+        btnName={" "}
         navigation={navigation}
         onPress={deleteHandler}
-        title={group.name}
+        title={"Favorites"}
       />
       <View style={{ marginTop: "-2%" }}>
         <HeaderContact
@@ -436,10 +397,10 @@ const style = StyleSheet.create({
   },
 });
 
-export default function GroupDetail(props) {
+export default function FavoriteScreen(props) {
   return (
     <ActionSheetProvider>
-      <MyGroupDetail {...props} />
+      <MyFavoritesScreen {...props} />
     </ActionSheetProvider>
   );
 }

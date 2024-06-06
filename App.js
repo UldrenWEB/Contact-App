@@ -10,6 +10,8 @@ import GroupScreen from "./app/screens/GroupsScreen.js";
 import GroupDetail from "./app/screens/GroupDetail.js";
 
 import { MyNavigation } from "./app/routes/MyNavigation.js";
+import DetailContactScreenGroup from "./app/screens/DetailContactScreenGroup.js";
+import FavoriteScreen from "./app/screens/FavoritesScreen.js";
 
 const App = () => {
   const nivel = [
@@ -23,6 +25,8 @@ const App = () => {
     { name: "AddContact", compo: AddContactScreen },
     { name: "Groups", compo: GroupScreen },
     { name: "GroupDetail", compo: GroupDetail },
+    { name: "DetailContactGroup", compo: DetailContactScreenGroup },
+    { name: "Favorites", compo: FavoriteScreen },
   ];
 
   return <MyNavigation arrayComponents={nivel} />;

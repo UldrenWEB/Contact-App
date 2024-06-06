@@ -15,12 +15,15 @@ import IconApp from "../components/IconApp";
 import { Icon } from "react-native-elements";
 import FieldContact from "../components/fieldContact";
 import { wrapper } from "../service/fetchWrapper";
-import { contacts as endPoint } from "../configs/endpoints.json";
+import {
+  contacts as endPoint,
+  groups as endPointGroup,
+} from "../configs/endpoints.json";
 
 const unknowImage = require("../resources/image.png");
 
-const DetailContactScreen = ({ route, navigation }) => {
-  const { id } = route.params;
+const DetailContactScreenGroup = ({ route, navigation }) => {
+  const { id, groupId } = route.params;
   const [contactData, setContactData] = useState([]);
   const [contact, setContact] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -44,17 +47,9 @@ const DetailContactScreen = ({ route, navigation }) => {
     chargeContact();
   }, [id]);
 
-  const editHandlerPress = () => {
-    // if (!contact._id) return;
-    //?Aqui se pasaran los datos del contact
-    navigation.navigate("Edit", { contact });
-  };
-
   useEffect(() => {
     let data = [];
-    if (!contact.phoneNumbers) return;
-
-    if (contact.phoneNumbers.length > 0) {
+    if (contact.phoneNumbers) {
       data.push({
         type: "icon",
         compo: (
@@ -129,7 +124,7 @@ const DetailContactScreen = ({ route, navigation }) => {
       setIsLoading(true);
       const result = await wrapper({
         method: "delete",
-        endPoint: `${endPoint.delete}${contact._id}`,
+        endPoint: `${endPointGroup.deleteContact}${groupId}/contacts/${contact._id}`,
         isToken: true,
       });
       setIsLoading(false);
@@ -182,19 +177,10 @@ const DetailContactScreen = ({ route, navigation }) => {
             </TouchableOpacity>
             <View style={{ gap: 10 }}>
               <TouchableOpacity
-                onPress={editHandlerPress}
-                style={[
-                  style.editBtn,
-                  { justifyContent: "center", alignItems: "center" },
-                ]}
-              >
-                <Text style={style.editTxt}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
                 onPress={deleteHandlerPress}
                 style={style.editBtn}
               >
-                <Text style={style.editTxt}>Delete</Text>
+                <Text style={style.editTxt}>Unassign</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -304,4 +290,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default DetailContactScreen;
+export default DetailContactScreenGroup;

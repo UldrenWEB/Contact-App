@@ -12,9 +12,9 @@ const Footer = ({}) => {
 
   return (
     <View style={style.container}>
-      <TouchableOpacity onPress={() => onPressHandler("Favorites")}>
+      {/* <TouchableOpacity onPress={() => onPressHandler("Favorites")}>
         <IconScreen icon={"star"} title={"Favorites"} route={"Favorites"} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity onPress={() => onPressHandler("Prueba")}>
         <IconScreen icon={"contact"} title={"Contacts"} route={"Prueba"} />
       </TouchableOpacity>
