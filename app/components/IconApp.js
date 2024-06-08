@@ -70,13 +70,15 @@ const IconApp = ({
         },
         async (buttonIndex) => {
           if (buttonIndex !== cancelButtonIndex) {
-            //!Llamar
             await handleLinking(arrayData[buttonIndex]);
           }
         }
       );
     } else {
-      await handleLinking(arrayData[0]);
+      console.log("Llamada", arrayData[0]);
+      await handleLinking(
+        !arrayData[0].number ? arrayData[0] : arrayData[0].number
+      );
     }
   };
 

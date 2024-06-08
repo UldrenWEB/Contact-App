@@ -52,8 +52,6 @@ const MyContactScreen = ({ navigation }) => {
   };
 
   const deleteAccount = async () => {
-    let bool = false;
-
     Alert.alert("Seguro?", "Deseas eliminar tu cuenta", [
       {
         text: "Ok",

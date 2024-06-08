@@ -62,18 +62,14 @@ const DetailContactScreen = ({ route, navigation }) => {
               <IconApp
                 iconType={"comment"}
                 colorName={"blue"}
-                arrayData={contact.phoneNumbers.map(
-                  (num) => Object.values(num)[0]
-                )}
+                arrayData={contact.phoneNumbers}
               />
             </View>
             <View key={`${contact.phoneNumbers} + 1`}>
               <IconApp
                 iconType={"phone"}
                 colorName={"pink"}
-                arrayData={contact.phoneNumbers.map(
-                  (num) => Object.values(num)[0]
-                )}
+                arrayData={contact.phoneNumbers}
               />
             </View>
           </>
