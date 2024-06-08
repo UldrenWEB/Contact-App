@@ -12,6 +12,8 @@ import {
 import Colors from "../styles/Colors";
 import { Icon } from "react-native-elements";
 import { style } from "../styles/editScreenStyle";
+import { wrapper } from "../service/fetchWrapper";
+import { contacts as endPoint } from "../configs/endpoints.json";
 
 const unknowImage = require("../resources/image.png");
 
@@ -35,7 +37,7 @@ const EditScreen = ({ route, navigation }) => {
     return regex.test(phoneNumber);
   };
 
-  const saveHandlerPress = () => {
+  const saveHandlerPress = async () => {
     if (!isModified) return;
 
     let error;
@@ -59,8 +61,20 @@ const EditScreen = ({ route, navigation }) => {
     }
 
     if (!error?.bool) {
-      //Aqui entraria para editar el contacto
-      console.log("Esta es la info del contacto a editar", editedContact);
+      try {
+        // const result = await wrapper({
+        //   method: "put",
+        //   endPoint: `${endPoint}${editedContact._id}`,
+        //   json: editedContact,
+        //   isToken: true,
+        // });
+        Alert.alert("Success", "Se ha editado exitosamente");
+        navigation.navigate("Prueba");
+
+        // console.log("Esta es la info del contacto a editar", editedContact._id);
+      } catch (error) {
+        Alert.alert("Error", "No se pudo editar el contacto");
+      }
     } else {
       Alert.alert("Error!", error.message, [
         {
@@ -138,11 +152,7 @@ const EditScreen = ({ route, navigation }) => {
                 name="arrow-left"
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={saveHandlerPress}
-              style={style.editBtn}
-              disabled={!isModified}
-            >
+            <TouchableOpacity onPress={saveHandlerPress} style={style.editBtn}>
               <Text style={style.editTxt}>Guardar</Text>
             </TouchableOpacity>
           </View>

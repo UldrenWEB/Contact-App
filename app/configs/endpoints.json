@@ -5,7 +5,8 @@
         "list":"contacts/view-contacts",
         "get":"contacts/view-contact",
         "create": "contacts/create-contact",
-        "delete": "contacts/delete-contact/"
+        "delete": "contacts/delete-contact/",
+        "edit": "contacts/edit-contact/"
     },
     "groups": {
         "get": "groups/list-groups",
