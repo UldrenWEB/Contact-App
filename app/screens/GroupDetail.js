@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   Button,
   ScrollView,
   TextInput,
@@ -28,6 +27,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import Session from "../storage/sessionStorage";
 import userContext from "../customs/userContext";
+import { style } from "../styles/groupDetailStyle";
 
 const MyGroupDetail = ({ navigation, route }) => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -202,9 +202,9 @@ const MyGroupDetail = ({ navigation, route }) => {
 
   const profileHandler = () => {
     const options = [
-      "Close session",
-      "Edit perfil",
-      "Delete account",
+      "Cerrar sesion",
+      "Editar perfil",
+      "Eliminar cuenta",
       "Cancelar",
     ];
     const destructiveButtonIndex = 3;
@@ -274,7 +274,7 @@ const MyGroupDetail = ({ navigation, route }) => {
             <View style={style.inputSearchCont}>
               <TextInput
                 style={style.input}
-                placeholder="Search"
+                placeholder="Buscar"
                 placeholderTextColor={converterHex(Colors.WHITE, 0.3)}
                 onChangeText={(text) => setTextSearcherContact(text)}
               />
@@ -305,6 +305,7 @@ const MyGroupDetail = ({ navigation, route }) => {
       </ReactNativeModal>
 
       <HeaderMinimal
+        isModified={true}
         btnName={"Eliminar"}
         navigation={navigation}
         onPress={deleteHandler}
@@ -371,70 +372,6 @@ const MyGroupDetail = ({ navigation, route }) => {
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.BLACK,
-    height: "100%",
-  },
-  centeredView: {
-    height: "50%",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: Colors.grayColor,
-    borderRadius: 20,
-    padding: 35,
-    height: "70%",
-    flexDirection: "column",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  contBtn: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 10,
-  },
-  btnModal: {
-    overflow: "hidden",
-    borderRadius: 10,
-  },
-  input: {
-    borderColor: Colors.WHITE,
-    borderRadius: 10,
-    width: 250,
-    fontFamily: "poBold",
-    fontSize: 15,
-    paddingLeft: 15,
-    paddingRight: 10,
-    color: Colors.SpiralColor,
-    borderWidth: 1,
-    paddingVertical: 2,
-  },
-  contContact: {
-    width: 230,
-    marginTop: 20,
-  },
-  textABC: {
-    color: Colors.WHITE,
-    marginTop: 10,
-    marginLeft: 10,
-    fontFamily: "reRegular",
-    fontSize: 15,
-  },
-});
 
 export default function GroupDetail(props) {
   return (

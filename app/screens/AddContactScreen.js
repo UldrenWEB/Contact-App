@@ -1,15 +1,10 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Colors from "../styles/Colors";
 
 import AddComponent from "../components/AddComponent";
 import HeaderMinimal from "../components/headerMinimal";
+import { style } from "../styles/addContactStyle";
 import { wrapper } from "../service/fetchWrapper";
 
 import { contacts } from "../configs/endpoints.json";
@@ -137,8 +132,6 @@ const AddContactScreen = ({ navigation, route }) => {
             ),
     };
 
-    console.log("Aqui nuevo contacto", obj);
-
     try {
       const result = await wrapper({
         endPoint: contacts.create,
@@ -146,8 +139,6 @@ const AddContactScreen = ({ navigation, route }) => {
         method: "post",
         json: obj,
       });
-
-      console.log("Aqui creacion", result);
 
       if (!result || !result.contact)
         return Alert.alert("Error", "No se pudo crear el nuevo usuario");
@@ -176,10 +167,11 @@ const AddContactScreen = ({ navigation, route }) => {
       style={style.container}
     >
       <HeaderMinimal
-        btnName={"Save"}
+        btnName={"Guardar"}
+        isModified={isModified}
         navigation={navigation}
         onPress={saveHandler}
-        title={"Add Contact"}
+        title={"Añadir"}
       />
       <KeyboardAwareScrollView
         style={style.contProp}
@@ -193,7 +185,7 @@ const AddContactScreen = ({ navigation, route }) => {
         extraHeight={20}
       >
         <AddComponent
-          label={"Name"}
+          label={"Nombre"}
           heigthMin={70}
           heightMax={105}
           marginBottom={"8%"}
@@ -217,7 +209,7 @@ const AddContactScreen = ({ navigation, route }) => {
         <AddComponent
           heigthMin={70}
           heightMax={105}
-          label={"Address"}
+          label={"Direccion"}
           marginBottom={"8%"}
           sizeLabel={18}
           textInput={editedAddress}
@@ -226,7 +218,7 @@ const AddContactScreen = ({ navigation, route }) => {
           onOpen={() => handleOpen("Address")}
         />
         <AddComponent
-          label={"Phone Number"}
+          label={"Numeros"}
           animationDuration={100}
           sizeLabel={18}
           heigthMin={74}
@@ -252,7 +244,7 @@ const AddContactScreen = ({ navigation, route }) => {
             onOpen={() => handleOpen2("Personal")}
           />
           <AddComponent
-            label={"Home"}
+            label={"Hogar"}
             sizeLabel={15}
             paddingHorizontal={10}
             heigthMin={70}
@@ -265,7 +257,7 @@ const AddContactScreen = ({ navigation, route }) => {
             onOpen={() => handleOpen2("Home")}
           />
           <AddComponent
-            label={"Work"}
+            label={"Trabajo"}
             sizeLabel={15}
             paddingHorizontal={10}
             heigthMin={70}
@@ -282,18 +274,5 @@ const AddContactScreen = ({ navigation, route }) => {
     </KeyboardAvoidingView>
   );
 };
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BLACK,
-    alignItems: "center",
-  },
-  contProp: {
-    flex: 1,
-    width: "100%",
-    marginTop: "12%",
-    paddingHorizontal: 10,
-  },
-});
 
 export default AddContactScreen;

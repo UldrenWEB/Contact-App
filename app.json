@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "contact-app",
-    "slug": "contact-app",
+    "name": "Spiral App",
+    "slug": "Spiral App for contacts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./app/src/resources/SpiralLogo.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "resizeMode": "contain",
@@ -15,7 +15,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/splash.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000000"
       },
       "package": "com.uldrendev.contactapp"

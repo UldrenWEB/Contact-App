@@ -3,7 +3,7 @@ import { Icon } from "react-native-elements";
 import Colors from "../styles/Colors";
 import { converterHex } from "../service/converterHex";
 
-const HeaderMinimal = ({ navigation, title, btnName, onPress }) => {
+const HeaderMinimal = ({ navigation, title, btnName, onPress, isModified }) => {
   const goBackHandler = () => {
     navigation.goBack();
   };
@@ -21,7 +21,10 @@ const HeaderMinimal = ({ navigation, title, btnName, onPress }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onPress}
-          style={btnName === " " ? "" : style.btnSave}
+          style={[
+            btnName === " " ? "" : style.btnSave,
+            { opacity: isModified ? 1 : 0.3 },
+          ]}
         >
           <Text style={style.txtSave}>{btnName}</Text>
         </TouchableOpacity>

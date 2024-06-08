@@ -113,19 +113,19 @@ const RegisterScreen = ({ navigation }) => {
         <View style={registerStyle.containerInputs}>
           <MyInput
             keyboardType="text"
-            placeholder={"Uldren-Personal"}
+            placeholder={"usuario trabajo"}
             image={"user"}
             onChangeText={(text) => setUsername(text)}
           />
           <MyInput
             keyboardType="text"
-            placeholder={"example@example.com"}
+            placeholder={"prueba@prueba.com"}
             image={"envelope"}
             onChangeText={(text) => setEmail(text)}
           />
           <MyInput
             keyboardType={null}
-            placeholder="Min. 8 characters"
+            placeholder="Min. 8 caracteres"
             image={"lock"}
             onChangeText={(text) => setPassword(text)}
             bolGone={true}
@@ -157,16 +157,18 @@ const RegisterScreen = ({ navigation }) => {
         )}
 
         <View>
-          <MyButton onPress={onPressHandler} bg={"primary"} text={"Register"} />
+          <MyButton
+            onPress={onPressHandler}
+            bg={"primary"}
+            text={"Registrar"}
+          />
         </View>
         <TouchableOpacity
           style={registerStyle.containerText}
           onPress={redirectLogin}
           activeOpacity={0.6}
         >
-          <Text style={registerStyle.textToLogin}>
-            Already have an account?
-          </Text>
+          <Text style={registerStyle.textToLogin}>Ya tienes una cuenta?</Text>
         </TouchableOpacity>
       </View>
     </>

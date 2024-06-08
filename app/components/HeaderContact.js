@@ -21,7 +21,7 @@ const HeaderContact = ({ onChange, text, onPressToAdd, onPressToProfile }) => {
           style={styles.lupIcon}
         />
         <TextInput
-          placeholder="Search"
+          placeholder="Buscar"
           placeholderTextColor={converterHex(Colors.WHITE, 0.3)}
           value={text}
           style={styles.input}

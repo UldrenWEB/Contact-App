@@ -121,26 +121,16 @@ const LoginScreen = ({ navigation }) => {
         <Image source={logo} />
         <Text style={loginStyles.txtLogo}>Spiral</Text>
       </View>
-
-      {/* <View style={loginStyles.descriptionContainer}>
-        <Text style={loginStyles.title}>Login</Text>
-        <View style={loginStyles.containerDescriptionTxt}>
-          <Text style={loginStyles.descriptionSpecified}>
-            Enter your email and password to log in
-          </Text>
-        </View>
-      </View> */}
-
       <View style={{ width: "90%", marginTop: "5%" }}>
         <MyInput
           keyboardType="email-address"
-          placeholder={"example@example.com"}
+          placeholder={"prueba@prueba.com"}
           image={"user"}
           onChangeText={(text) => setEmail(text)}
         />
         <MyInput
           keyboardType={null}
-          placeholder="Min. 8 characters"
+          placeholder="Min. 8 caracteres"
           image={"lock"}
           bolGone={true}
           secureTextEntry={hidePassword}
@@ -179,7 +169,7 @@ const LoginScreen = ({ navigation }) => {
         style={loginStyles.containerByTxt}
       >
         <Text style={loginStyles.txtToRegister}>
-          Don't you have an account yet?
+          No tienes una cuenta todavia?
         </Text>
       </TouchableOpacity>
     </View>

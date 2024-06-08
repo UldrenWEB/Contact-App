@@ -4,11 +4,9 @@ import {
   Text,
   ActivityIndicator,
   Image,
-  StyleSheet,
   TouchableOpacity,
   StatusBar,
   Animated,
-  Platform,
   Alert,
 } from "react-native";
 import useValidateSession from "../customs/useValidateSession";
@@ -30,6 +28,7 @@ import { converterHex } from "../service/converterHex";
 import userContext from "../customs/userContext.js";
 import { useFocusEffect } from "@react-navigation/native";
 import Session from "../storage/sessionStorage.js";
+import { style } from "../styles/contactStyle.js";
 
 const unknow = require("../resources/FotoPerfil.png");
 
@@ -101,9 +100,9 @@ const MyContactScreen = ({ navigation }) => {
 
   const onPressToProfileHandler = () => {
     const options = [
-      "Close session",
-      "Edit perfil",
-      "Delete account",
+      "Cerrar sesion",
+      "Editar perfil",
+      "Eliminar cuenta",
       "Cancelar",
     ];
     const destructiveButtonIndex = 3;
@@ -316,53 +315,6 @@ const MyContactScreen = ({ navigation }) => {
     </>
   );
 };
-
-const style = StyleSheet.create({
-  headerDinamic: {
-    backgroundColor: Colors.grayColor,
-    marginTop: Platform.OS === "ios" ? "12%" : "7%",
-    width: "100%",
-    height: "auto",
-    display: "flex",
-    flexDirection: "row",
-    gap: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-  },
-  contImg: {
-    width: 90,
-    height: 90,
-  },
-  contName: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  txtName: {
-    fontFamily: "poBold",
-    fontSize: 20,
-    color: Colors.WHITE,
-    textTransform: "capitalize",
-  },
-  txtInfo: {
-    color: Colors.GRAY,
-    fontFamily: "poRegular",
-  },
-  contInfUser: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  contIcon: {
-    marginVertical: "auto",
-    marginLeft: "10%",
-  },
-  textABC: {
-    color: Colors.WHITE,
-    marginTop: 10,
-    marginLeft: 10,
-    fontFamily: "reRegular",
-    fontSize: 15,
-  },
-});
 
 export default function ContactScreen(props) {
   return (

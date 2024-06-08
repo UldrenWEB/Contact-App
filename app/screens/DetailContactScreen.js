@@ -2,20 +2,19 @@ import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   StatusBar,
   Image,
   Alert,
   ActivityIndicator,
 } from "react-native";
-import { converterHex } from "../service/converterHex";
 import Colors from "../styles/Colors";
 import IconApp from "../components/IconApp";
 import { Icon } from "react-native-elements";
 import FieldContact from "../components/fieldContact";
 import { wrapper } from "../service/fetchWrapper";
 import { contacts as endPoint } from "../configs/endpoints.json";
+import { style } from "../styles/detailContact";
 
 const unknowImage = require("../resources/image.png");
 
@@ -84,7 +83,10 @@ const DetailContactScreen = ({ route, navigation }) => {
         type: "field",
         compo: (
           <View key={contact.phoneNumbers}>
-            <FieldContact label={"PhoneNumber"} value={contact.phoneNumbers} />
+            <FieldContact
+              label={"Numero telefonico"}
+              value={contact.phoneNumbers}
+            />
           </View>
         ),
       });
@@ -116,7 +118,7 @@ const DetailContactScreen = ({ route, navigation }) => {
         type: "field",
         compo: (
           <View key={contact.address}>
-            <FieldContact label={"Address"} value={contact.address} />
+            <FieldContact label={"Direccion"} value={contact.address} />
           </View>
         ),
       });
@@ -185,16 +187,20 @@ const DetailContactScreen = ({ route, navigation }) => {
                 onPress={editHandlerPress}
                 style={[
                   style.editBtn,
-                  { justifyContent: "center", alignItems: "center" },
+                  {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 20,
+                  },
                 ]}
               >
-                <Text style={style.editTxt}>Edit</Text>
+                <Text style={style.editTxt}>Editar</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={deleteHandlerPress}
                 style={style.editBtn}
               >
-                <Text style={style.editTxt}>Delete</Text>
+                <Text style={style.editTxt}>Eliminar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -223,85 +229,5 @@ const DetailContactScreen = ({ route, navigation }) => {
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.BLACK,
-    flex: 1,
-    alignItems: "center",
-  },
-  header: {
-    width: "100%",
-    height: "40%",
-    backgroundColor: Colors.grayColor,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-  },
-  subContainerHeader: {
-    marginTop: "4%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-  },
-  contButtons: {
-    height: "15%",
-    display: "flex",
-    marginTop: "10%",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: "5%",
-    justifyContent: "space-between",
-  },
-  editTxt: {
-    color: Colors.SpiralColor,
-    fontFamily: "poBold",
-    zIndex: 1,
-    margin: "auto",
-    marginHorizontal: 15,
-  },
-  editBtn: {
-    height: "70%",
-    backgroundColor: converterHex(Colors.WHITE, 0.1),
-    borderRadius: 15,
-  },
-  backBtn: {
-    height: "60%",
-  },
-  styleImage: {
-    width: "36.5%",
-    height: "69%",
-  },
-  contDetail: {
-    marginTop: "-14%",
-    display: "flex",
-    gap: 5,
-    flexDirection: "column",
-    height: "65%",
-    alignItems: "center",
-  },
-  txtName: {
-    fontSize: 30,
-    color: Colors.WHITE,
-    fontFamily: "poBold",
-    textTransform: "capitalize",
-  },
-  contIcon: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "-3%",
-    width: "50%",
-    height: "30%",
-  },
-  containerData: {
-    width: "100%",
-    height: "58%",
-    paddingVertical: "3%",
-    gap: 10,
-    justifyContent: "space-evenly",
-  },
-});
 
 export default DetailContactScreen;

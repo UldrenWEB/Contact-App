@@ -16,10 +16,10 @@ const Footer = ({}) => {
         <IconScreen icon={"star"} title={"Favorites"} route={"Favorites"} />
       </TouchableOpacity> */}
       <TouchableOpacity onPress={() => onPressHandler("Prueba")}>
-        <IconScreen icon={"contact"} title={"Contacts"} route={"Prueba"} />
+        <IconScreen icon={"contact"} title={"Contactos"} route={"Prueba"} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onPressHandler("Groups")}>
-        <IconScreen icon={"group"} title={"Groups"} route={"Groups"} />
+        <IconScreen icon={"group"} title={"Grupos"} route={"Groups"} />
       </TouchableOpacity>
     </View>
   );

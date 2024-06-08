@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Image,
   TextInput,
@@ -11,13 +10,12 @@ import {
 } from "react-native";
 import { useContext, useState } from "react";
 import { Icon } from "react-native-elements";
-import { converterHex } from "../service/converterHex";
 import Colors from "../styles/Colors";
 import { useEffect } from "react";
 import { wrapper } from "../service/fetchWrapper";
 import { user as endPoint } from "../configs/endpoints.json";
 import userContext from "../customs/userContext";
-import Session from "../storage/sessionStorage";
+import { style } from "../styles/editProfileStyle";
 
 const unknow = require("../resources/image.png");
 
@@ -162,8 +160,11 @@ const EditProfile = ({ route, navigation }) => {
                 name="arrow-left"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={saveHandlerPress} style={style.editBtn}>
-              <Text style={style.editTxt}>Save</Text>
+            <TouchableOpacity
+              onPress={saveHandlerPress}
+              style={[style.editBtn, { opacity: isModified ? 1 : 0.3 }]}
+            >
+              <Text style={style.editTxt}>Guardar</Text>
             </TouchableOpacity>
           </View>
           <View style={style.contDetail}>
@@ -176,7 +177,7 @@ const EditProfile = ({ route, navigation }) => {
       </View>
       <ScrollView style={style.contInputs}>
         <View style={style.fieldContainer}>
-          <Text style={style.label}>{"Username"}:</Text>
+          <Text style={style.label}>{"Nombre de usuario"}:</Text>
           <TextInput
             style={style.input}
             value={editUser.username}
@@ -196,7 +197,7 @@ const EditProfile = ({ route, navigation }) => {
           />
         </View>
         <View style={style.fieldContainer}>
-          <Text style={style.label}>{"Password"}:</Text>
+          <Text style={style.label}>{"Contraseña"}:</Text>
           <TextInput
             style={style.input}
             value={editUser.password}
@@ -209,97 +210,5 @@ const EditProfile = ({ route, navigation }) => {
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  container: {
-    height: "100%",
-    backgroundColor: Colors.BLACK,
-  },
-  header: {
-    width: "100%",
-    height: 250,
-    backgroundColor: Colors.grayColor,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-  },
-  subContainerHeader: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-  },
-  contButtons: {
-    height: "15%",
-    display: "flex",
-    marginTop: "5%",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: "5%",
-    justifyContent: "space-between",
-  },
-  contInputs: {
-    display: "flex",
-    height: "70%",
-    marginTop: "7%",
-    // justifyContent: "center",
-    // alignItems: "center",
-  },
-  editTxt: {
-    color: Colors.SpiralColor,
-    fontFamily: "poBold",
-    zIndex: 1,
-    margin: "auto",
-    marginHorizontal: 15,
-  },
-  editBtn: {
-    height: "70%",
-    backgroundColor: converterHex(Colors.WHITE, 0.1),
-    borderRadius: 15,
-  },
-  backBtn: {
-    height: "60%",
-  },
-  contDetail: {
-    marginTop: "-7%",
-    display: "flex",
-    gap: 5,
-    flexDirection: "column",
-    height: "65%",
-    alignItems: "center",
-  },
-  txtName: {
-    fontSize: 30,
-    color: Colors.WHITE,
-    fontFamily: "poBold",
-    textTransform: "capitalize",
-  },
-  fieldContainer: {
-    display: "flex",
-    marginBottom: 30,
-    width: "90%",
-    padding: 10,
-    backgroundColor: Colors.grayColor,
-    borderRadius: 15,
-    marginHorizontal: "auto",
-  },
-  input: {
-    borderColor: Colors.SpiralColor,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginLeft: 10,
-    height: 40,
-    color: Colors.WHITE,
-    marginVertical: 10,
-    padding: 10,
-    textDecorationLine: "underline",
-    fontSize: 16,
-  },
-  label: {
-    color: Colors.SpiralColor,
-    fontFamily: "poBold",
-    fontSize: 17,
-    textTransform: "capitalize",
-  },
-});
 
 export default EditProfile;
